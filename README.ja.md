@@ -11,8 +11,8 @@ Unityでプレイ動画を録画し、共有することができます
 
 
 # 使い方
-* RecShare.unitypackage をインポート
-* サンプルが必要な場合、RecShareSample.unitypackage を追加でインポート
+* `RecShare.unitypackage` をインポート
+* サンプルが必要な場合、`RecShareSample.unitypackage` を追加でインポート
 
 
 # API
