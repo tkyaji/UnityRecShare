@@ -10,6 +10,10 @@ English | [日本語](README.ja.md)
 * Without sound
 
 
+# Usage
+* Import `RecShare.unitypackage`
+* If the sample is necessary, import additional `RecShareSample.unitypackage`
+
 
 # API
 
