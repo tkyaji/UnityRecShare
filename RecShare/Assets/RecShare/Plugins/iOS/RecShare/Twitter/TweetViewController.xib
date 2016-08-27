@@ -8,6 +8,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TweetViewController">
             <connections>
                 <outlet property="accountArrow" destination="VYZ-op-EjN" id="w4e-7j-a91"/>
+                <outlet property="accountButton" destination="i6B-rP-EoP" id="Wnl-55-4K7"/>
+                <outlet property="accountLabel" destination="IE9-ug-5sr" id="1R9-Ps-k50"/>
                 <outlet property="imageView" destination="YmS-J3-iwl" id="pGK-y8-lSQ"/>
                 <outlet property="postButtonBarItem" destination="SLQ-Ky-4I4" id="LZW-Ix-NJz"/>
                 <outlet property="textCount" destination="SS6-MH-fYo" id="P69-4D-DYp"/>
@@ -135,14 +137,14 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VkQ-ix-A3S">
                                                     <rect key="frame" x="10" y="73" width="80" height="17"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yjM-Un-ZTZ">
-                                                            <rect key="frame" x="51" y="0.0" width="24" height="17"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yjM-Un-ZTZ">
+                                                            <rect key="frame" x="52" y="0.0" width="23" height="17"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11.5"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="video_icon" translatesAutoresizingMaskIntoConstraints="NO" id="r97-sx-BRk">
-                                                            <rect key="frame" x="8" y="1" width="15" height="15"/>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="video_icon" translatesAutoresizingMaskIntoConstraints="NO" id="r97-sx-BRk">
+                                                            <rect key="frame" x="5" y="1" width="15" height="15"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="15" id="PUn-WX-BhT"/>
                                                                 <constraint firstAttribute="height" constant="15" id="j3I-Tn-7SP"/>
@@ -224,6 +226,12 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Enb-UK-3tw">
                     <rect key="frame" x="0.0" y="256" width="284" height="44"/>
                     <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i6B-rP-EoP">
+                            <rect key="frame" x="0.0" y="0.0" width="284" height="44"/>
+                            <connections>
+                                <action selector="accountButtonClicked:" destination="-1" eventType="touchUpInside" id="ePo-6o-u7m"/>
+                            </connections>
+                        </button>
                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&gt;" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VYZ-op-EjN">
                             <rect key="frame" x="265" y="8" width="11" height="33"/>
                             <fontDescription key="fontDescription" name="AlNile-Bold" family="Al Nile" pointSize="28"/>
@@ -237,16 +245,32 @@
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IE9-ug-5sr">
+                            <rect key="frame" x="119" y="0.0" width="136" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="136" id="6WG-8d-nrv"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
+                        <constraint firstItem="i6B-rP-EoP" firstAttribute="leading" secondItem="Enb-UK-3tw" secondAttribute="leading" id="DFk-bD-s4t"/>
                         <constraint firstItem="Yl8-p5-Tgz" firstAttribute="leading" secondItem="Enb-UK-3tw" secondAttribute="leading" constant="14" id="Mol-47-fSB"/>
                         <constraint firstItem="Yl8-p5-Tgz" firstAttribute="leading" secondItem="Enb-UK-3tw" secondAttribute="leading" constant="14" id="W7H-Ja-l90"/>
+                        <constraint firstItem="IE9-ug-5sr" firstAttribute="bottom" secondItem="i6B-rP-EoP" secondAttribute="bottom" id="ZUZ-jM-EBc"/>
+                        <constraint firstItem="IE9-ug-5sr" firstAttribute="top" secondItem="Enb-UK-3tw" secondAttribute="top" id="aFL-fW-DIH"/>
                         <constraint firstAttribute="bottom" secondItem="Yl8-p5-Tgz" secondAttribute="bottom" constant="8" id="eaT-2h-dGn"/>
                         <constraint firstAttribute="bottom" secondItem="VYZ-op-EjN" secondAttribute="bottom" constant="3" id="eo1-2S-P2u"/>
+                        <constraint firstItem="IE9-ug-5sr" firstAttribute="top" secondItem="i6B-rP-EoP" secondAttribute="top" id="fUW-Rd-Lde"/>
                         <constraint firstAttribute="trailing" secondItem="VYZ-op-EjN" secondAttribute="trailing" constant="8" id="g1x-NG-xKK"/>
                         <constraint firstItem="Yl8-p5-Tgz" firstAttribute="top" secondItem="Enb-UK-3tw" secondAttribute="top" constant="8" id="lF0-kU-8GY"/>
                         <constraint firstItem="VYZ-op-EjN" firstAttribute="top" secondItem="Enb-UK-3tw" secondAttribute="top" constant="8" id="rbN-A0-d1H"/>
+                        <constraint firstAttribute="trailing" secondItem="i6B-rP-EoP" secondAttribute="trailing" id="s1w-Wl-FRk"/>
+                        <constraint firstItem="IE9-ug-5sr" firstAttribute="centerY" secondItem="Yl8-p5-Tgz" secondAttribute="centerY" id="t7G-eq-MFs"/>
+                        <constraint firstItem="VYZ-op-EjN" firstAttribute="leading" secondItem="IE9-ug-5sr" secondAttribute="trailing" constant="10" id="x9G-Cl-CPo"/>
                         <constraint firstAttribute="height" constant="44" id="ymN-Se-iAA"/>
                     </constraints>
                     <variation key="default">

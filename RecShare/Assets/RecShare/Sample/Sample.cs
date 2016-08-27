@@ -33,13 +33,6 @@ public class Sample : MonoBehaviour {
 		RecShare.SetOverlayImage("logo", new Vector2(300f, 30f), RecShare.Alignment.BottomRight);
 	}
 
-	void Update() {
-		Debug.Log("duration : " + RecShare.GetVideoDuration());
-		Debug.Log("path : " + RecShare.GetVideoFilePath());
-		Debug.Log("recording : " + RecShare.IsRecording());
-		Debug.Log("paused : " + RecShare.IsPaused());
-	}
-
 	public void StartButtonClick() {
 		RecShare.StartRecording();
 

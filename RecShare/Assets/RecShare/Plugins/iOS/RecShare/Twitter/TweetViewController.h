@@ -16,8 +16,10 @@
 @interface TweetViewController : UIViewController <UIViewControllerTransitioningDelegate, UITextViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *postButtonBarItem;
-@property (weak, nonatomic) IBOutlet UIButton *accountButton;
+//@property (weak, nonatomic) IBOutlet UIButton *accountButton;
 @property (weak, nonatomic) IBOutlet UILabel *accountArrow;
+@property (weak, nonatomic) IBOutlet UILabel *accountLabel;
+@property (weak, nonatomic) IBOutlet UIButton *accountButton;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (weak, nonatomic) IBOutlet UILabel *textCount;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;

@@ -70,7 +70,7 @@
             ACAccount *account = [self selectAccount:accountArr];
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.accountButton setTitle:account.username forState:UIControlStateNormal];
+                [self.accountLabel setText:[NSString stringWithFormat:@"@%@", account.username]];
                 [self.postButtonBarItem setEnabled:YES];
                 if (accountArr.count > 1) {
                     [self.accountButton setEnabled:YES];
@@ -140,8 +140,9 @@
         UIAlertAction *action = [UIAlertAction actionWithTitle:[NSString stringWithFormat:@"@%@", ac.username]
                                                          style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction *action) {
-                                                           [self.accountButton setTitle:ac.username forState:UIControlStateNormal];
+                                                           [self.accountLabel setText:action.title];
                                                            [[NSUserDefaults standardUserDefaults] setObject:ac.username forKey:USER_DEFAULT_KEY_SELECTED_ACCOUNT];
+                                                           [self.textView becomeFirstResponder];
                                                        }];
         [alertController addAction:action];
     }
@@ -149,8 +150,14 @@
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
                                                            style:UIAlertActionStyleCancel
                                                          handler:^(UIAlertAction *action) {
+                                                             [self.textView becomeFirstResponder];
                                                          }];
     [alertController addAction:cancelAction];
+    
+    alertController.popoverPresentationController.sourceView = self.accountButton;
+    alertController.popoverPresentationController.sourceRect = self.accountButton.frame;
+    
+    [self.textView resignFirstResponder];
     
     [self presentViewController:alertController animated:YES completion:nil];
 }
