@@ -2,6 +2,8 @@
 
 You can record and share your gameplay.
 
+English | [日本語](README.ja.md)
+
 
 # Supported
 * iOS Only
