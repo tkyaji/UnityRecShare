@@ -6,8 +6,10 @@ English | [日本語](README.ja.md)
 
 
 # Supported
-* iOS Only
-* Without sound
+* >= Unity 5.3
+* >= iOS 8
+
+(iOS Only, Without sound)
 
 
 # Usage
