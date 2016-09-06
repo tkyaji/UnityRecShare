@@ -223,19 +223,14 @@
 
 - (void)setOverlayImage:(UIImage *)image imageSize:(CGSize)imageSize alignment:(VideoCreatorImageAlignment)alignment {
     CGRect center = [self getCenterRectForPixelBuffer:image size:imageSize];
+    CGSize screenSize = [UIScreen mainScreen].nativeBounds.size;
     
-    CGFloat screenScale = [[UIScreen mainScreen] scale];
-    CGSize screenSize = [UIScreen mainScreen].bounds.size;
-    screenSize.width *= screenScale;
-    screenSize.height *= screenScale;
-    
-    center.origin.x =screenSize.width / 2 - center.size.width / 2;
     CVPixelBufferRef pixelBuffer = [VideoCreator getPixelBufferFromCGImage:image.CGImage imageRect:center bgColor:nil];
     _overlayImage = [CIImage imageWithCVPixelBuffer:pixelBuffer];
 
     CGFloat offsetY = screenSize.height / 2 - center.size.height / 2;
     CGFloat offsetX = screenSize.width / 2 - center.size.width / 2;
-
+    
     switch (alignment) {
         case VideoCreatorImageAlignmentTopCenter:
             _overlayFrame = CGRectMake(0, -offsetY, screenSize.width, screenSize.height);
@@ -295,10 +290,8 @@
 #pragma - Private Methods
 
 - (CGRect)getCenterRectForPixelBuffer:(UIImage *)image size:(CGSize)size {
-    CGFloat screenScale = [[UIScreen mainScreen] scale];
-    CGSize screenSize = [UIScreen mainScreen].bounds.size;
-    screenSize.width *= screenScale;
-    screenSize.height *= screenScale;
+    CGFloat screenScale = [UIScreen mainScreen].nativeScale;
+    CGSize screenSize = [UIScreen mainScreen].nativeBounds.size;
     
     size.width *= screenScale;
     size.height *= screenScale;

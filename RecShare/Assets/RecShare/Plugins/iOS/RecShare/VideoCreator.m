@@ -51,10 +51,10 @@
 }
 
 - (void)appendPixelBuffer:(CVPixelBufferRef)pixelBuffer overlayImage:(CIImage *)overlayImage overlayFrame:(CGRect)overlayFrame frameCounter:(int)frameCounter {
-
+    
     int bufferW = (int)CVPixelBufferGetWidth(pixelBuffer);
     int bufferH = (int)CVPixelBufferGetHeight(pixelBuffer);
-
+    
     CVPixelBufferRef pixelBufferCopy = NULL;
     if (CVPixelBufferCreate(kCFAllocatorDefault, bufferW, bufferH, kCVPixelFormatType_32BGRA, NULL, &pixelBufferCopy) == kCVReturnSuccess) {
         CVPixelBufferLockBaseAddress(pixelBuffer, 0);
@@ -80,10 +80,10 @@
 
 - (void)initWriter:(int)width height:(int)height {
     if (width < height) {
-        width = (int)(MAX_SIDE_LENGTH / (float)height * width);
+        width = round((double)MAX_SIDE_LENGTH / 10 / height * width) * 10;
         height = MAX_SIDE_LENGTH;
     } else {
-        height = (int)(MAX_SIDE_LENGTH / (float)width * height);
+        height = round((double)MAX_SIDE_LENGTH / 10 / width * height) * 10;
         width = MAX_SIDE_LENGTH;
     }
     
@@ -147,14 +147,34 @@
     CMTime frameTime = CMTimeMake(_frameCount, self.fps);
     [_videoWriter endSessionAtSourceTime:frameTime];
     
+    float osVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
     [_videoWriter finishWritingWithCompletionHandler:^{
-        if (completion) {
-            completion();
+        if (osVersion >= 9.0) {
+            [self finalizeVars:completion];
         }
     }];
     
     CVPixelBufferPoolRelease(_adaptor.pixelBufferPool);
     
+    if (osVersion < 9.0) {
+        [self checkFinalizeWriter:completion];
+    }
+}
+
+- (void)checkFinalizeWriter:(void (^)(void))completion {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        if (_videoWriter.status == AVAssetExportSessionStatusExporting || _videoWriter.status == AVAssetExportSessionStatusCompleted) {
+            [self finalizeVars:completion];
+        } else {
+            [self checkFinalizeWriter:completion];
+        }
+    });
+}
+
+- (void)finalizeVars:(void (^)(void))completion {
+    if (completion) {
+        completion();
+    }
     _adaptor = nil;
     _videoWriter = nil;
     _videoInput = nil;
@@ -167,10 +187,7 @@
 
 + (CVPixelBufferRef)getPixelBufferFromCGImage:(CGImageRef)image imageRect:(CGRect)imageRect bgColor:(UIColor *)bgColor {
     
-    CGFloat scale = [[UIScreen mainScreen] scale];
-    CGSize screenSize = [UIScreen mainScreen].bounds.size;
-    screenSize.height *= scale;
-    screenSize.width *= scale;
+    CGSize screenSize = [UIScreen mainScreen].nativeBounds.size;
     
     NSDictionary *options = @{(__bridge NSString *)kCVPixelBufferCGImageCompatibilityKey: @(NO),
                               (__bridge NSString *)kCVPixelBufferCGBitmapContextCompatibilityKey: @(NO)
