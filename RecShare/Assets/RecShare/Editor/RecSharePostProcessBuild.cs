@@ -1,18 +1,20 @@
-﻿#if UNITY_IOS
+#if UNITY_IOS
+using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEditor.iOS.Xcode;
 using System.IO;
 using System.Linq;
 
-
 namespace RecShare {
 	public class RecSharePostProcessBuild {
 
 		[PostProcessBuild]
 		public static void OnPostProcessBuild(BuildTarget buildTarget, string path) {
-			
-			copyAssetCatalogFiles("./Assets/RecShare/Editor/Images.xcassets",
+
+			string recShareEditorFolder = FindFolderPath ("/RecShare/Editor");
+
+			copyAssetCatalogFiles(recShareEditorFolder + "/Images.xcassets",
 			                      Path.Combine(path, "Unity-iPhone/Images.xcassets"));
 
 
@@ -27,7 +29,7 @@ namespace RecShare {
 				Directory.CreateDirectory(toImageDir);
 			}
 
-			var dirInfo = new DirectoryInfo("./Assets/RecShare/Editor/Images");
+			var dirInfo = new DirectoryInfo(recShareEditorFolder + "/Images");
 			foreach (FileInfo fileInfo in dirInfo.GetFiles()) {
 				if (fileInfo.Name.StartsWith(".") || fileInfo.Name.EndsWith(".meta") || fileInfo.Name.EndsWith(".txt")) {
 					continue;
@@ -39,6 +41,13 @@ namespace RecShare {
 			}
 
 			File.WriteAllText(projPath, proj.WriteToString());
+		}
+			
+		private static string FindFolderPath(string baseName)
+		{
+			string[] directories = Directory.GetDirectories (UnityEngine.Application.dataPath, "*", SearchOption.AllDirectories).
+				Where(folder => folder.Contains(baseName) && folder.EndsWith(baseName)).ToList().ToArray();
+			return directories[0];
 		}
 
 		private static void copyAssetCatalogFiles(string srcPath, string dstPath) {
